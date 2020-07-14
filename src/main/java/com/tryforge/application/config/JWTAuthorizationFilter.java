@@ -35,10 +35,29 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
         UsernamePasswordAuthenticationToken authenticationToken = getAuthentication(request);
 
+        System.out.println("Authenticated by server "+authenticationToken.isAuthenticated());
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         chain.doFilter(request, response);
 
     }
+
+//    private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request){
+//        String token = request.getHeader(HEADER_STRING);
+//        if (token !=null){
+//            //parse the token
+//            String user = JWT.require(Algorithm.HMAC512(SecurityConstants.SECRET.getBytes())).build()
+//                    .verify(token.replace(TOKEN_PREFIX, ""))
+//                    .getSubject();
+//            if (user !=null){
+//
+//                return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
+//
+//            }
+//            return null;
+//        }
+//
+//        return null;
+//    }
 
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request){
         String token = request.getHeader(HEADER_STRING);
@@ -48,6 +67,8 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
                     .verify(token.replace(TOKEN_PREFIX, ""))
                     .getSubject();
             if (user !=null){
+                System.out.println("Authentication Token Authorization "+user);
+
                 return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
 
             }

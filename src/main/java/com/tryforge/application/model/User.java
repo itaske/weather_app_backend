@@ -32,8 +32,9 @@ public class User implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     LocalDateTime dateOfBirth;
 
+    private String addressLocation;
 
-    public static BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+    private Double latitude, longitude;
 
     @PrePersist
     public void init(){
@@ -61,7 +62,7 @@ public class User implements Serializable {
     }
 
     public void setPassword(String password) {
-        this.password = bCryptPasswordEncoder.encode(password);
+        this.password = password;
     }
 
     public LocalDateTime getDateCreated() {
@@ -80,6 +81,30 @@ public class User implements Serializable {
         this.dateOfBirth = dateOfBirth;
     }
 
+    public String getAddressLocation() {
+        return addressLocation;
+    }
+
+    public void setAddressLocation(String addressLocation) {
+        this.addressLocation = addressLocation;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -95,5 +120,16 @@ public class User implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id, email, password, dateCreated, dateOfBirth);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", dateCreated=" + dateCreated +
+                ", dateOfBirth=" + dateOfBirth +
+                '}';
     }
 }
