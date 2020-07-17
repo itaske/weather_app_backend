@@ -35,8 +35,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
         UsernamePasswordAuthenticationToken authenticationToken = getAuthentication(request);
 
-        System.out.println("Authenticated by server "+authenticationToken.isAuthenticated());
-        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+       SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         chain.doFilter(request, response);
 
     }
@@ -67,7 +66,6 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
                     .verify(token.replace(TOKEN_PREFIX, ""))
                     .getSubject();
             if (user !=null){
-                System.out.println("Authentication Token Authorization "+user);
 
                 return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
 
